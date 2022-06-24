@@ -1,0 +1,9 @@
+
+
+
+POST http://localhost:3000/app.mjs/
+Content-Type: application/json
+
+{
+ "imageInput":"https://simandhar-edu-assets.s3.ap-south-1.amazonaws.com/landing_page/wmu_unique/study-material.png";
+}
