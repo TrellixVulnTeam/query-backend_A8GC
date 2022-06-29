@@ -2,10 +2,12 @@ const express = require("express");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
+const cors=require("cors")
 const app = express();
 const { S3Client } = require("@aws-sdk/client-s3"); // Helper function that creates an Amazon S3 service client module.
 const { PutObjectCommand } = require("@aws-sdk/client-s3");
 app.use(fileUpload());
+app.use(cors())
 // Upload Endpoint
 app.post("/upload", (req, res) => {
   if (req.files === null) {
