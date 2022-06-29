@@ -1,7 +1,7 @@
 
 
 
-POST http://localhost:3000/app.mjs/
+POST http://localhost:3000/app.js/
 Content-Type: application/json
 
 {
