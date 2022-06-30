@@ -16,7 +16,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "node app.mjs"
+    "start": "node pdfupload.js"
   },
   "name": "imageupload",
   "version": "1.0.0",
