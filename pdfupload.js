@@ -79,8 +79,8 @@ app.post("/query/", async (request, response) => {
     
     // Setting up S3 upload parameters
     const params = {
-        Bucket: 'simandhar-edu-assets',
-        Key: "/Evaluations", // File name you want to save as in S3
+        Bucket: 'simandhar-edu-assets/Evaluations',
+        Key: media, // File name you want to save as in S3
         Body: fileContent 
     }; 
     s3.upload(params, function(err, media) {
@@ -127,7 +127,7 @@ app.post("/query/", async (request, response) => {
             '${emailaddress}',
             '${phonenumber}',
             '${course}',
-            '${media}',
+            '${media.location}',
             '${textvalue}'
         );
       `;
