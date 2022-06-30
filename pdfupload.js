@@ -39,7 +39,7 @@ const db = mysql.createConnection({
     console.log("Connection established");
   }); 
 
-app.listen(3000)
+app.listen(process.env.PORT || 5000)
 
 const AWSCredentials = {
     accessKey: 'AKIA36ASJN7RA3D6VGJ4',
