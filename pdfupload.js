@@ -2,10 +2,10 @@ const express=require("express")
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const mysql = require("mysql");
-
+const cors=require("cors")
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 
 // const pool=createPool({
 //     host: "127.0.0.1",
