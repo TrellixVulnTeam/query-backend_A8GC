@@ -2,11 +2,12 @@ const express=require("express")
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const mysql = require("mysql");
-const cors=require("cors")
+const cors=require("cors") 
+const fileUpload = require('express-fileupload');
 const app = express();
 app.use(express.json());
 app.use(cors())
-
+app.use(fileUpload());
 // const pool=createPool({
 //     host: "127.0.0.1",
 //     port: 3036,
@@ -41,16 +42,19 @@ const db = mysql.createConnection({
 
 app.listen(process.env.PORT || 5000)
 
-const AWSCredentials = {
-    accessKey: 'AKIA36ASJN7RA3D6VGJ4',
-    secret: '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',
-    bucketName: 'simandhar-edu-assets/Evaluations/'
-};
+// const AWSCredentials = {
+//     accessKey: 'AKIA36ASJN7RA3D6VGJ4',
+//     secret: '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',
+//     bucketName: 'simandhar-edu-assets/Evaluations'
+// };
 
-const s3 = new AWS.S3({
-    accessKeyId: AWSCredentials.accessKey,
-    secretAccessKey: AWSCredentials.secret
-});
+// const s3 = new AWS.S3({
+//     accessKeyId: AWSCredentials.accessKey,
+//     secretAccessKey: AWSCredentials.secret
+// });
+
+
+
 
 
 
@@ -60,27 +64,58 @@ app.post("/query/", async (request, response) => {
     const { fullname, emailaddress, phonenumber, course, media, textvalue } =
       request.body; 
 
-      const uploadToS3 = (media) => {
-        // Read content from the file
-        const fileContent = fs.readFileSync(media);
+
+      AWS.config.update({
+        accessKeyId: "AKIA36ASJN7RA3D6VGJ4", // Access key ID
+        secretAccesskey: "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", // Secret access key
+        region: "ap-south-1" //Region
+    })
     
-        // Setting up S3 upload parameters
-        const params = {
-            Bucket: AWSCredentials.bucketName,
-            Key: media,
-            Body: fileContent
-        };
     
-        // Uploading files to the bucket
-        s3.upload(params, function(err, data) {
-            if (err) {
-                throw err;
-            }
-            console.log(`File uploaded successfully. ${data.Location}`);
+    const s3 = new AWS.S3();
+    
+    // Binary data base64
+    const fileContent  = Buffer.from(req.files.uploadedFileName.media, 'binary');
+    
+    // Setting up S3 upload parameters
+    const params = {
+        Bucket: 'simandhar-edu-assets',
+        Key: "/Evaluations", // File name you want to save as in S3
+        Body: fileContent 
+    }; 
+    s3.upload(params, function(err, media) {
+        if (err) {
+            throw err;
+        }
+        res.send({
+            "response_code": 200,
+            "response_message": "Success",
+            "response_data": media
         });
-    };
+    });
     
-    uploadToS3(`${media}`); 
+
+    //   const uploadToS3 = (media) => {
+    //     // Read content from the file
+    //     const fileContent = fs.readFileSync(media);
+    
+    //     // Setting up S3 upload parameters
+    //     const params = {
+    //         Bucket: AWSCredentials.bucketName,
+    //         Key: media,
+    //         Body: fileContent
+    //     };
+    
+    //     // Uploading files to the bucket
+    //     s3.upload(params, function(err, data) {
+    //         if (err) {
+    //             throw err;
+    //         }
+    //         console.log(`File uploaded successfully. ${data.Location}`);
+    //     });
+    // };
+    
+    // uploadToS3(`${media}`); 
 
 
 
