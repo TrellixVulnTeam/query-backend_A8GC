@@ -71,7 +71,7 @@ app.post("/query/", async (request, response) => {
     Bucket: "simandhar-edu-assets/Evaluations",
     ACL: "public-read",
     Body: media,
-    Key: file.name,
+    Key: media.name,
   }; 
  
 
