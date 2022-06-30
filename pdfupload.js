@@ -75,7 +75,7 @@ app.post("/query/", async (request, response) => {
     const s3 = new AWS.S3();
     
     // Binary data base64
-    const fileContent  = Buffer.from(req.files.uploadedFileName.media, 'binary');
+    const fileContent  = Buffer.from(request.files.uploadedFileName.media, 'binary');
     
     // Setting up S3 upload parameters
     const params = {
