@@ -8,6 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 app.use(fileUpload());
+const Buffer=require("buffer")
 // const pool=createPool({
 //     host: "127.0.0.1",
 //     port: 3036,
