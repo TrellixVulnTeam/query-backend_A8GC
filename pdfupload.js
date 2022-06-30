@@ -23,12 +23,14 @@ app.use(fileUpload());
 //         return console.log(err)
 //     }
 //     return console.log("Connected to Database")
+//user: "admin_simandhar_internal",
+//password: "Jw224j$z",
 // })
 const db = mysql.createConnection({
     host: "localhost",
     port: 3306,
-    user: "admin_simandhar_internal",
-    password: "Jw224j$z",
+    user: "test",
+    password: "",
     database: "simandhar_internal_db",
   });
   
