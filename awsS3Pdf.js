@@ -2,6 +2,7 @@ const express = require("express");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 const fs = require("fs");
+const http=require("http")
 const cors=require("cors")
 const app = express();
 const { S3Client } = require("@aws-sdk/client-s3"); // Helper function that creates an Amazon S3 service client module.
@@ -46,6 +47,6 @@ app.post("/upload", (req, res) => {
   run();
 });
 
-app.listen(process.env.PORT || 3000, () => console.log("Server Started..."));
+app.listen(process.env.PORT || 5000, () => console.log(" listening to 5000"));
 
 
