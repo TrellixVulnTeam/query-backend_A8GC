@@ -8,7 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 app.use(fileUpload());
-const Buffer=require("buffer")
+const Buffer=require("buffer");
+const { file } = require("pdfkit");
 // const pool=createPool({
 //     host: "127.0.0.1",
 //     port: 3036,
@@ -74,28 +75,42 @@ app.post("/query/", async (request, response) => {
         region: "ap-south-1" //Region
     })
     
+
+    let params = {
+        Bucket: "simandhar-edu-assets/Evaluations",
+        Key: "file.name",
+        Body: "file",
+    };
+
+    try {
+        let uploadPromise = await new AWS.S3().putObject(params).promise();
+        console.log("Successfully uploaded data to bucket");
+    } catch (e) {
+        console.log("Error uploading data: ", e);
+    }
     
-    const s3 = new AWS.S3();
+    uploadPromise()
+    // const s3 = new AWS.S3();
     
     // Binary data base64
-    const fileContent  = Buffer.from(request.files.media, 'binary');
+    // const fileContent  = Buffer.from(request.files.media, 'binary');
     
     // Setting up S3 upload parameters
-    const params = {
-        Bucket: 'simandhar-edu-assets/Evaluations',
-        Key: media, // File name you want to save as in S3
-        Body: fileContent 
-    }; 
-    s3.upload(params, function(err, media) {
-        if (err) {
-            throw err;
-        }
-        res.send({
-            "response_code": 200,
-            "response_message": "Success",
-            "response_data": media
-        });
-    });
+    // const params = {
+    //     Bucket: 'simandhar-edu-assets/Evaluations',
+    //     Key: fileContent.media, // File name you want to save as in S3
+    //     Body: fileContent 
+    // }; 
+    // s3.upload(params, function(err, media) {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     res.send({
+    //         "response_code": 200,
+    //         "response_message": "Success",
+    //         "response_data": media
+    //     });
+    // });
     
 
     //   const uploadToS3 = (media) => {
